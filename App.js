@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, FlatList, TextInput, TouchableOpacity, } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, TextInput, TouchableOpacity, } from 'react-native';
 import SwipeableRow from 'react-native-swipeable-row';
 
 const data = [
@@ -17,16 +17,16 @@ const data = [
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.head}>
         <Image
             source={{
               uri: 'https://img.icons8.com/?size=512&id=60636&format=png' 
             }}
             resizeMode='cover'
-            style={{ width: 20, height: 20, }}
+            style={{ width: 30, height: 30, }}
         />
-        <Text style={{fontSize: 20, fontWeight: '600'}}>Select your meal</Text>
+        <Text style={{fontSize: 20, fontWeight: '600', }}>Select your meal</Text>
       </View>
 
       <View style={styles.body1}>
@@ -67,12 +67,16 @@ export default function App() {
       renderItem={({ item }) => (
         <SwipeableRow rightButtons={[
           <TouchableOpacity onPress={() => this.handleDelete(item.id)}>
-            <View style={{ backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+            <View style={{ backgroundColor: 'red', margin: 40}}>
               <Image source={{ uri: 'https://img.icons8.com/?size=512&id=QGjdymRmAtqp&format=png' }} style={{ width: 50, height: 50, marginRight: 100, }} />
             </View>
           </TouchableOpacity>
         ]}
         useNativeDriver={true}
+        friction={2}
+        rightThreshold={40}
+        overshootRight={false}
+        useNativeAnimations={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12 }}>
             <Image source={{ uri: item.image1 }} style={{ width: 150, height: 100, marginRight: 10 }} resizeMode='cover' />
@@ -149,7 +153,7 @@ export default function App() {
         </View>
 
         <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -161,10 +165,11 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
   },
   head: {
-    justifyContent: 'space-around',
-    alignContent: 'center',
+    justifyContent: 'space-between',
+    //alignContent: 'center',
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: 15,
+    padding: 10,
   },
   body1: {
     flexDirection: 'row',
